@@ -12,4 +12,4 @@
 </head>
 <body>
 
-
+<?= view('templates/navigation') ?>
