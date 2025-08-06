@@ -5,7 +5,7 @@
             id="personenTabelle"
             class="table"
             data-toggle="table"
-            data-url="<?= base_url('home/getPersonenAjax') ?>"
+            data-url="<?= base_url('personen/getPersonenAjax') ?>"
             data-search="true"
             data-pagination="true"
             data-show-refresh="true"
@@ -31,7 +31,7 @@
 <script>
     function pdfButtonFormatter(value, row, index) {
         const id = row.id;
-        const url = "<?= base_url('pdf/person') ?>/" + id;
+        const url = "<?= base_url('personen/pdf') ?>/" + id;
 
         return `
             <a href="${url}" class="btn btn-sm btn-outline-danger" target="_blank" title="Person als PDF anzeigen">
