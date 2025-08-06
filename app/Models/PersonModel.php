@@ -18,4 +18,7 @@ class PersonModel extends Model
 
         return $builder->get()->getResultArray();
     }
+
+
+
 }

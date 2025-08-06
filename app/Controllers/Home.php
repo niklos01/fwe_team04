@@ -8,15 +8,16 @@ class Home extends BaseController
 {
     public function index(): void
     {
-        $model = new PersonModel();
+        echo view('templates/header');
+        echo view('tableAjax');
+        echo view('templates/footer');
+    }
 
-        // Personen-Daten abrufen
+    public function getPersonenAjax()
+    {
+        $model = new PersonModel();
         $personen = $model->getPersonen();
 
-        // Views anzeigen
-        echo view('templates/header');
-        echo view('table', ['personen' => $personen]);
-
-        echo view('templates/footer');
+        return json_encode($personen);
     }
 }
