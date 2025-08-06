@@ -9,7 +9,7 @@ class Home extends BaseController
     public function index(): void
     {
         $this->renderLayout([
-            'tableAjax'
+            'dashboard/dashboard',
         ]);
     }
 
