@@ -1,10 +1,14 @@
+html {
+    height: 100%;
+}
+
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;   /* Seite mindestens so hoch wie der sichtbare Bereich */
-    margin: 0;           /* Standard-Margin des Body entfernen */
+    min-height: 100vh;
+    margin: 0;
 }
 main {
-    flex: 1;             /* Hauptbereich füllt den restlichen Platz (schiebt Footer nach unten) */
+    flex: 1;
 }
-/* Footer könnte optional margin-top: auto haben, wenn main kein flex:1 nutzt */
+
