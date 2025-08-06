@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<div class="card">
     <div class="card-header">Umsätze der letzten 12 Monate</div>
     <div class="card-body">
         <canvas id="barChart"></canvas>
@@ -11,7 +11,7 @@
         .then(response => response.json())
         .then(data => {
             const labels = data.map(d => `${String(d.monat).padStart(2, '0')}.${d.jahr}`);
-            const values = data.map(d => d.umsatz);
+            const values = data.map(d => Number(d.umsatz)); // Caste zu Zahl
 
             new Chart(document.getElementById('barChart'), {
                 type: 'bar',
@@ -34,7 +34,21 @@
                         },
                         tooltip: {
                             callbacks: {
-                                label: context => `€ ${context.raw.toFixed(2)}`
+                                label: function (context) {
+                                    const index = context.dataIndex;
+                                    const current = Number(context.raw);
+                                    const previous = index > 0 ? Number(context.dataset.data[index - 1]) : null;
+
+                                    if (isNaN(current)) return 'Ungültiger Wert';
+
+                                    let changeText = '(kein Vormonat)';
+                                    if (previous !== null && !isNaN(previous) && previous !== 0) {
+                                        const change = (((current - previous) / previous) * 100).toFixed(1);
+                                        changeText = change >= 0 ? `(+${change}%)` : `(${change}%)`;
+                                    }
+
+                                    return `€ ${current.toFixed(2)} ${changeText}`;
+                                }
                             }
                         }
                     },
