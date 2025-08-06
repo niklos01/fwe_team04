@@ -18,7 +18,7 @@ class UmsatzModel extends Model
     public function getLast12Months(): array
     {
         $now = new DateTime();
-        $start = (clone $now)->modify('-11 months');
+        $start = (clone $now)->modify('-12 months');
 
         $builder = $this->builder();
         $builder->select('monat, jahr, umsatz');
