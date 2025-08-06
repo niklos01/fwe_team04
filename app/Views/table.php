@@ -1,7 +1,16 @@
 <div class="container mt-5">
     <h2>Personenliste</h2>
-    <table class="table table-bordered table-striped">
-        <thead>
+    <table
+        data-toggle="table"
+        data-search="true"
+        data-pagination="true"
+        data-show-columns="true"
+        data-show-refresh="true"
+        data-toolbar="#toolbar"
+        class="table"
+    >
+
+    <thead>
         <tr>
             <th>#</th>
             <th>Vorname</th>
