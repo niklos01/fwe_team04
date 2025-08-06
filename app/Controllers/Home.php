@@ -15,9 +15,7 @@ class Home extends BaseController
 
         // Views anzeigen
         echo view('templates/header');
-        echo '<pre>';
-        var_dump($personen);
-        echo '</pre>';
+        echo view('table', ['personen' => $personen]);
 
         echo view('templates/footer');
     }
