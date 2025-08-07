@@ -1,19 +1,32 @@
- class Chatbot {
+class Chatbot {
     constructor() {
-        this.init();
         this.isOpen = false;
+        this.hasWelcomeMessage = false;
+        this.hasGreeted = false;
+
+        this.welcomeMessage = `
+            👋 Hallo! Ich bin hier, um Ihnen zu helfen. Sie können mich fragen über:
+            • Das aktuelle Wetter in Trier
+            • Die Umsatzentwicklung
+            • Die Anzahl der Personen in der Datenbank
+            • Den Standort der Universität
+            
+            Was möchten Sie wissen?
+        `;
+
+        this.init();
     }
 
     init() {
-        // Create chat container
         const container = document.createElement('div');
         container.className = 'chat-container';
-        
-        // Create chat button
+
         const button = document.createElement('button');
         button.className = 'chat-button';
+
         const svgWrapper = document.createElement('div');
         svgWrapper.className = 'chat-icon';
+
         svgWrapper.innerHTML = `
             <svg width="100%" height="auto" preserveAspectRatio="xMidYMid meet" viewBox="0 0 986 856" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Group 5">
@@ -40,26 +53,23 @@
             </defs>
             </svg>
         `;
+
         button.appendChild(svgWrapper);
         button.onclick = () => this.toggleChat();
-        
-        // Create chat window
+
         const chatWindow = document.createElement('div');
         chatWindow.className = 'chat-window';
-        
-        // Create chat header
+
         const header = document.createElement('div');
         header.className = 'chat-header';
         header.textContent = 'Cleo, dein Chat Assistant';
-        
-        // Create messages container
+
         const messages = document.createElement('div');
         messages.className = 'chat-messages';
-        
-        // Create input area
+
         const inputArea = document.createElement('div');
         inputArea.className = 'chat-input';
-        
+
         const input = document.createElement('input');
         input.type = 'text';
         input.placeholder = 'Schreib deine Nachricht…';
@@ -68,36 +78,49 @@
                 this.sendMessage();
             }
         };
-        
+
         const sendButton = document.createElement('button');
         sendButton.textContent = 'Senden';
         sendButton.onclick = () => this.sendMessage();
-        
-        // Assemble the components
+
         inputArea.appendChild(input);
         inputArea.appendChild(sendButton);
+
         chatWindow.appendChild(header);
         chatWindow.appendChild(messages);
         chatWindow.appendChild(inputArea);
+
         container.appendChild(button);
         container.appendChild(chatWindow);
-        
+
         document.body.appendChild(container);
-        
-        // Store references
+
         this.chatWindow = chatWindow;
         this.messagesContainer = messages;
         this.input = input;
     }
 
     toggleChat() {
-        this.isOpen = !this.isOpen;
-        this.chatWindow.classList.toggle('active');
-        
-        if (this.isOpen && !this.hasGreeted) {
-            this.addMessage('Hey! Ich kenn mich hier aus. Du bist im Dashboard, soll ich deine Umsätze analysieren?', 'bot');
-            this.hasGreeted = true;
+        const container = document.querySelector('.chat-container');
+        if (!this.isOpen) {
+            container.classList.add('open');
+            this.chatWindow.classList.add('active');
+
+            if (!this.hasWelcomeMessage) {
+                this.addMessage(this.welcomeMessage, 'bot');
+                this.hasWelcomeMessage = true;
+            }
+
+            if (!this.hasGreeted) {
+                this.addMessage('Hey! Ich kenn mich hier aus. Du bist im Dashboard, soll ich deine Umsätze analysieren?', 'bot');
+                this.hasGreeted = true;
+            }
+        } else {
+            container.classList.remove('open');
+            this.chatWindow.classList.remove('active');
         }
+
+        this.isOpen = !this.isOpen;
     }
 
     addMessage(text, sender) {
@@ -114,7 +137,6 @@
 
         const baseUrl = "http://localhost/fwe/public/";
 
-        // Add user message
         this.addMessage(text, 'user');
         this.input.value = '';
 
@@ -131,22 +153,14 @@
                 throw new Error('Network response was not ok');
             }
 
-            // Antwort als Text empfangen (keine Chunks, kein Stream)
             const result = await response.text();
-
-            // Versuche JSON zu parsen, falls API so antwortet
             let output = result;
+
             try {
                 const json = JSON.parse(result);
-                if (json.chunk) {
-                    output = json.chunk;
-                } else if (json.message) {
-                    output = json.message;
-                } else if (json.error) {
-                    output = json.error;
-                }
+                output = json.chunk || json.message || json.error || result;
             } catch (e) {
-                // Kein JSON, einfach als Text ausgeben
+                // kein gültiges JSON
             }
 
             this.addMessage(output, 'bot');
@@ -158,7 +172,6 @@
     }
 }
 
-// Initialize chatbot when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     new Chatbot();
 });
