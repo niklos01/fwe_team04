@@ -5,13 +5,7 @@ class Chatbot {
         this.hasGreeted = false;
 
         this.welcomeMessage = `
-            👋 Hallo! Ich bin hier, um Ihnen zu helfen. Sie können mich fragen über:
-            • Das aktuelle Wetter in Trier
-            • Die Umsatzentwicklung
-            • Die Anzahl der Personen in der Datenbank
-            • Den Standort der Universität
-            
-            Was möchten Sie wissen?
+            Hey, ich bin Cleo! Ich bin hier, um dir zu helfen.
         `;
 
         this.init();
@@ -112,7 +106,7 @@ class Chatbot {
             }
 
             if (!this.hasGreeted) {
-                this.addMessage('Hey! Ich kenn mich hier aus. Du bist im Dashboard, soll ich deine Umsätze analysieren?', 'bot');
+                this.addMessage('Soll ich deine Umsätze analysieren?', 'bot');
                 this.hasGreeted = true;
             }
         } else {
