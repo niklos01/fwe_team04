@@ -16,7 +16,7 @@ class Api extends ResourceController
         return $this->respond($personen);
     }
 
-    private function reqWithAuth()
+    public function reqWithAuth()
     {
         // Get the Authorization header
         $authHeader = $this->request->getHeaderLine('Authorization');
@@ -41,18 +41,6 @@ class Api extends ResourceController
         $personen = $model->getPersonen();
         return $this->respond($personen);
 
-    }
-
-    // Add this to methods that need authentication
-    public function securedEndpoint()
-    {
-        $auth = $this->authenticateRequest();
-        if ($auth !== true) {
-            return $auth; // Return the error response
-        }
-
-        // Your secured endpoint logic here
-        return $this->respond(['message' => 'Access granted to secured resource']);
     }
 
 }
