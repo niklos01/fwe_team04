@@ -1,6 +1,6 @@
 <div class="container text-center my-4">
     <div class="row gap-2 align-items-stretch">
-        <div class="col">
+        <div class="col col-8">
             <?= $this->include('dashboard/charts/last-12-months-bar-chart') ?>
         </div>
         <div class="col">

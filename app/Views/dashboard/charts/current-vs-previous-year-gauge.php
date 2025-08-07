@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">Monatsumsatz im Vergleich zum Vorjahr</div>
     <div class="card-body">
-        <canvas id="gaugeChart"></canvas>
+        <canvas id="gaugeChart" style="max-height: 300px;"></canvas>
         <div id="chartSummary"></div>
     </div>
 </div>
@@ -80,7 +80,8 @@
             document.getElementById('chartSummary').innerHTML = `
                 <p>
                     Umsatz Vorjahr (Monat): <strong>€${previous.toFixed(2)}</strong><br>
-                    Noch <strong>${remainingDays}</strong> Tage übrig → Täglicher Zielumsatz: <strong>€${dailyTarget.toFixed(2)}</strong>
+                    Noch <strong>${remainingDays}</strong> Tage übrig<br>
+                    → Täglicher Zielumsatz: <strong>€${dailyTarget.toFixed(2)}</strong>
                 </p>
             `;
         });

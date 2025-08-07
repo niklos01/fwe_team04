@@ -1,7 +1,7 @@
-<div class="card"  style="max-height: 500px">
+<div class="card">
     <div class="card-header">Umsätze der letzten 12 Monate</div>
     <div class="card-body">
-        <canvas id="barChart"></canvas>
+        <canvas id="barChart" style="max-height: 400px;"></canvas>
     </div>
 </div>
 
