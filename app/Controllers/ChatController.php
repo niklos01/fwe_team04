@@ -3,56 +3,43 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
-use AIAccess\AIAccess;
+use AIAccess\Provider\Gemini\Client as GeminiClient;
 
 class ChatController extends ResourceController
 {
     protected $format = 'json';
-    private $aiAccess;
+    protected $gemini;
 
     public function __construct()
     {
-        parent::__construct();
-        $this->aiAccess = new AIAccess(getenv('GEMINI_API_KEY'), 'gemini');
+        $apiKey = getenv('GEMINI_API_KEY');
+        $this->gemini = new GeminiClient($apiKey); // Initialisiere den Gemini-Client
     }
 
     public function chat()
     {
         $message = $this->request->getJSON()->message ?? '';
-        
+
         if (empty($message)) {
-            return $this->response->setStatusCode(400)->setJSON([
-                'error' => 'Message is required'
-            ]);
+            return $this->failValidationError('Message is required');
         }
 
-        // Set headers for streaming response
-        $this->response->setHeader('Content-Type', 'text/event-stream');
-        $this->response->setHeader('Cache-Control', 'no-cache');
-        $this->response->setHeader('Connection', 'keep-alive');
-        
         try {
-            // Create a chat completion with streaming
-            $stream = $this->aiAccess->completion([
-                'messages' => [
-                    ['role' => 'user', 'content' => $message]
-                ],
-                'stream' => true
+            // Erstelle Chat (nicht streamend)
+            $chat = $this->gemini->createChat('gemini-2.5-flash');
+
+            // Sende Nachricht
+            $response = $chat->sendMessage($message);
+
+            // Hole reinen Text (AI Access extrahiert das automatisch)
+            $text = $response->getText();
+
+            return $this->respond([
+                'message' => $text
             ]);
-            
-            // Stream the response chunks
-            foreach ($stream as $response) {
-                $chunk = $response->choices[0]->delta->content ?? '';
-                if (!empty($chunk)) {
-                    echo "data: " . json_encode(['chunk' => $chunk]) . "\n\n";
-                    ob_flush();
-                    flush();
-                }
-            }
-        } catch (\Exception $e) {
-            return $this->response->setStatusCode(500)->setJSON([
-                'error' => $e->getMessage()
-            ]);
+
+        } catch (\Throwable $e) {
+            return $this->failServerError($e->getMessage());
         }
     }
 }

@@ -1,4 +1,4 @@
-class Chatbot {
+ class Chatbot {
     constructor() {
         this.init();
         this.isOpen = false;
@@ -84,12 +84,14 @@ class Chatbot {
         const text = this.input.value.trim();
         if (!text) return;
 
+        const baseUrl = "http://localhost/fwe/public/";
+
         // Add user message
         this.addMessage(text, 'user');
         this.input.value = '';
 
         try {
-            const response = await fetch('/api/chat', {
+            const response = await fetch(baseUrl + '/api/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -101,34 +103,25 @@ class Chatbot {
                 throw new Error('Network response was not ok');
             }
 
-            const reader = response.body.getReader();
-            let partialResponse = '';
+            // Antwort als Text empfangen (keine Chunks, kein Stream)
+            const result = await response.text();
 
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-
-                // Convert the chunk to text and append to partial response
-                partialResponse += new TextDecoder().decode(value);
-
-                // Split by newlines to handle multiple chunks
-                const chunks = partialResponse.split('\n');
-                
-                // Process all complete chunks
-                for (let i = 0; i < chunks.length - 1; i++) {
-                    if (chunks[i].trim()) {
-                        this.addMessage(chunks[i], 'bot');
-                    }
+            // Versuche JSON zu parsen, falls API so antwortet
+            let output = result;
+            try {
+                const json = JSON.parse(result);
+                if (json.chunk) {
+                    output = json.chunk;
+                } else if (json.message) {
+                    output = json.message;
+                } else if (json.error) {
+                    output = json.error;
                 }
-
-                // Keep the last partial chunk
-                partialResponse = chunks[chunks.length - 1];
+            } catch (e) {
+                // Kein JSON, einfach als Text ausgeben
             }
 
-            // Handle any remaining response
-            if (partialResponse.trim()) {
-                this.addMessage(partialResponse, 'bot');
-            }
+            this.addMessage(output, 'bot');
 
         } catch (error) {
             console.error('Error:', error);

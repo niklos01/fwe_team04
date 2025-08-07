@@ -22,4 +22,5 @@ $routes->get("api/", "Api::index");
 $routes->post("api/crud", "Api::crud");
 $routes->get("api/weather", "Api::weather");
 $routes->get("api2/ai", "Api2::ai_response");
+
 $routes->post("api/chat", "ChatController::chat");
