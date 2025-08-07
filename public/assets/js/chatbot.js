@@ -130,10 +130,19 @@ class Chatbot {
     addMessage(text, sender) {
         const message = document.createElement('div');
         message.className = `message ${sender}-message`;
-        message.textContent = text;
+
+        if (sender === 'bot') {
+            // Text mit Markdown rendern
+            message.innerHTML = marked.parse(text);
+        } else {
+            // Nur als reiner Text (sicher)
+            message.textContent = text;
+        }
+
         this.messagesContainer.appendChild(message);
         this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
     }
+
 
     async sendMessage() {
         const text = this.input.value.trim();
