@@ -20,3 +20,4 @@ $routes->get('home/generatePdfAll', 'Home::generatePdfAll');
 
 $routes->get("api/", "Api::index");
 $routes->post("api/crud", "Api::crud");
+$routes->get("api2/ai", "Api2::ai_response");
