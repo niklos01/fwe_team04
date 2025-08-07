@@ -146,7 +146,9 @@ class Chatbot {
         const text = this.input.value.trim();
         if (!text) return;
 
-        const baseUrl = "http://localhost/fwe/public/";
+        //const baseUrl = "http://localhost/fwe/public/";
+        const baseUrl = "https://team04.wi1cm.uni-trier.de/public/";
+
 
         this.addMessage(text, 'user');
         this.input.value = '';
