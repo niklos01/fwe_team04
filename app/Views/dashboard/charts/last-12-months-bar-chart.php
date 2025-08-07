@@ -11,7 +11,7 @@
         .then(response => response.json())
         .then(data => {
             const labels = data.map(d => `${String(d.monat).padStart(2, '0')}.${d.jahr}`);
-            const values = data.map(d => Number(d.umsatz)); // Caste zu Zahl
+            const values = data.map(d => Number(d.umsatz));
 
             new Chart(document.getElementById('barChart'), {
                 type: 'bar',
