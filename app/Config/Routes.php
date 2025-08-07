@@ -18,5 +18,4 @@ $routes->get('umsatz/current-month-comparison', 'Umsatz::currentMonthComparison'
 
 
 $routes->get('home/getPersonenAjax', 'Home::getPersonenAjax');
-$routes->get('generatepdf', 'Home2::generatePDF');
-$routes->get('viewpdfformat', 'Home2::viewPDFFormat');
+$routes->get('home/generatePdfAll', 'Home::generatePdfAll');
