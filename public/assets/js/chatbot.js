@@ -50,7 +50,7 @@
         // Create chat header
         const header = document.createElement('div');
         header.className = 'chat-header';
-        header.textContent = 'Chat Assistant';
+        header.textContent = 'Cleo, dein Chat Assistant';
         
         // Create messages container
         const messages = document.createElement('div');
@@ -62,7 +62,7 @@
         
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = 'Type your message...';
+        input.placeholder = 'Schreib deine Nachricht…';
         input.onkeypress = (e) => {
             if (e.key === 'Enter') {
                 this.sendMessage();
@@ -70,7 +70,7 @@
         };
         
         const sendButton = document.createElement('button');
-        sendButton.textContent = 'Send';
+        sendButton.textContent = 'Senden';
         sendButton.onclick = () => this.sendMessage();
         
         // Assemble the components
@@ -95,7 +95,7 @@
         this.chatWindow.classList.toggle('active');
         
         if (this.isOpen && !this.hasGreeted) {
-            this.addMessage('Hello! How can I help you today?', 'bot');
+            this.addMessage('Hey! Ich kenn mich hier aus. Du bist im Dashboard, soll ich deine Umsätze analysieren?', 'bot');
             this.hasGreeted = true;
         }
     }
@@ -153,7 +153,7 @@
 
         } catch (error) {
             console.error('Error:', error);
-            this.addMessage('Sorry, there was an error processing your request.', 'bot');
+            this.addMessage('Entschuldigung, bei der Verarbeitung deiner Anfrage ist ein Fehler aufgetreten.', 'bot');
         }
     }
 }
