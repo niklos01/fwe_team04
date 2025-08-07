@@ -45,4 +45,44 @@ class Api extends ResourceController
 
     }
 
+    public function weather()
+    {
+        $apiKey = getenv('OPEN_WEATHER_MAP_KEY');
+
+        if (!$apiKey) {
+            return $this->response->setJSON([
+                'error' => 'API key missing'
+            ])->setStatusCode(500);
+        }
+
+        // Hole Stadt aus GET-Parameter, Standard: Trier,de
+        $city = $this->request->getGet('city') ?? 'Trier,de';
+
+        // URL für OpenWeatherMap-API
+        $url = "https://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$apiKey}&units=metric&lang=de";
+
+        $client = \Config\Services::curlrequest();
+        $response = $client->get($url);
+
+        if ($response->getStatusCode() !== 200) {
+            return $this->response->setJSON([
+                'error' => 'Fehler beim Abrufen der Wetterdaten'
+            ])->setStatusCode(500);
+        }
+
+        $data = json_decode($response->getBody(), true);
+
+        $result = [
+            'stadt'        => $data['name'],
+            'beschreibung' => $data['weather'][0]['description'],
+            'icon'         => $data['weather'][0]['icon'],
+            'temperatur'   => $data['main']['temp'],
+            'luftfeuchte'  => $data['main']['humidity'],
+            'wind'         => $data['wind']['speed'],
+        ];
+
+        return $this->response->setJSON($result);
+    }
+
+
 }
