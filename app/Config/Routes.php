@@ -19,7 +19,4 @@ $routes->get('home/getPersonenAjax', 'Home::getPersonenAjax');
 $routes->get('home/generatePdfAll', 'Home::generatePdfAll');
 
 $routes->get("api/", "Api::index");
-$routes->get("api/reqWithAuth", "Api::reqWithAuth");
-$routes->get("api2/", "Api2::index");
-$routes->get("api2/reqWithAuth", "Api2::reqWithAuth");
-$routes->post("api2/crud", "Api2::crud");
+$routes->post("api/crud", "Api::crud");
