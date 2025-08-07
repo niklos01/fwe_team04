@@ -3,7 +3,7 @@
 
     <div class="table-responsive">
         <div id="toolbar" class="d-flex justify-content-end gap-2 mb-2">
-            <a href="<?= base_url("home/generatePdfAll") ?>" class="btn btn-sm btn-outline-danger" target="_blank" title="Person als PDF anzeigen">
+            <a href="<?= base_url("home/generatePdfAll") ?>" class="btn btn-sm btn-outline-danger" title="Gesamte Personen als PDF downloaden">
                 <i class="bi bi-file-earmark-pdf"></i> Alle Downloaden
             </a>
         </div>

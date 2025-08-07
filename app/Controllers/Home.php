@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\PersonModel;
+use App\Models\UmsatzModel;
 use Mpdf\Mpdf;
+use Mpdf\MpdfException;
 
 class Home extends BaseController
 {
@@ -11,6 +13,14 @@ class Home extends BaseController
     {
         $this->renderLayout([
             'dashboard/dashboard',
+        ]);
+    }
+
+
+    // Personen
+    public function indexPersonen(){
+        $this->renderLayout([
+            "personen/tableAjax",
         ]);
     }
 
@@ -23,6 +33,45 @@ class Home extends BaseController
     }
 
 
+    /**
+     * @throws MpdfException
+     */
+    public function pdf(int $id): \CodeIgniter\HTTP\ResponseInterface
+    {
+        $model = new PersonModel();
+        $person = $model->getPersonen($id);
+
+        if (!$person) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Person mit ID {$id} nicht gefunden.");
+        }
+
+        $mpdf = new Mpdf();
+
+        $html = view('personen/pdf_template', ['person' => $person]);
+
+        $mpdf->WriteHTML($html);
+
+        return $this->response
+            ->setHeader('Content-Type', 'application/pdf')
+            ->setBody($mpdf->Output("person_{$id}.pdf", 'S')); // Stream to browser
+    }
+
+
+
+    // Umsatz
+    public function last12Months()
+    {
+        $this->umsatzModel = new UmsatzModel();
+        $data = $this->umsatzModel->getLast12Months();
+        return $this->response->setJSON($data);
+    }
+
+    public function currentMonthComparison()
+    {
+        $this->umsatzModel = new UmsatzModel();
+        $data = $this->umsatzModel->getCurrentMonthComparison();
+        return $this->response->setJSON($data);
+    }
 
 
     // PDF
