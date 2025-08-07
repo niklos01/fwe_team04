@@ -1,30 +1,32 @@
 <div class="container mt-5">
     <h2>Personenliste</h2>
 
-    <table
-            id="personenTabelle"
-            class="table"
-            data-toggle="table"
-            data-url="<?= base_url('personen/getPersonenAjax') ?>"
-            data-search="true"
-            data-pagination="true"
-            data-show-refresh="true"
-            data-show-columns="true"
-            data-side-pagination="client"
-    >
-        <thead>
-        <tr>
-            <th data-field="id" data-sortable="true">#</th>
-            <th data-field="vorname" data-sortable="true">Vorname</th>
-            <th data-field="name" data-sortable="true">Nachname</th>
-            <th data-field="strasse">Straße</th>
-            <th data-field="plz">PLZ</th>
-            <th data-field="ort">Ort</th>
-            <th data-field="username" data-sortable="true">Username</th>
-            <th data-field="aktionen" data-formatter="pdfButtonFormatter" data-align="center">Aktion</th>
-        </tr>
-        </thead>
-    </table>
+    <div class="table-responsive">
+        <table
+                id="personenTabelle"
+                class="table table-bordered table-hover table-striped align-middle"
+                data-toggle="table"
+                data-url="<?= base_url('personen/getPersonenAjax') ?>"
+                data-search="true"
+                data-pagination="true"
+                data-show-refresh="true"
+                data-show-columns="true"
+                data-side-pagination="client"
+        >
+            <thead class="table-dark">
+            <tr>
+                <th data-field="id" data-sortable="true">#</th>
+                <th data-field="vorname" data-sortable="true">Vorname</th>
+                <th data-field="name" data-sortable="true">Nachname</th>
+                <th data-field="strasse">Straße</th>
+                <th data-field="plz">PLZ</th>
+                <th data-field="ort">Ort</th>
+                <th data-field="username" data-sortable="true">Username</th>
+                <th data-field="aktionen" data-formatter="pdfButtonFormatter" data-align="center">Aktion</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 
 
