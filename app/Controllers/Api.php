@@ -17,7 +17,9 @@ class Api extends ResourceController
     }
 
     public function crud()
-    { // Get the Authorization header
+    {
+        // Get the Authorization header
+        $authHeader = $this->request->getHeaderLine('Authorization');
 
         // Check if Authorization header exists and starts with "Bearer "
         if (empty($authHeader) || ! str_starts_with($authHeader, 'Bearer ')) {
