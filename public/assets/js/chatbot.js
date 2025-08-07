@@ -132,10 +132,8 @@ class Chatbot {
         message.className = `message ${sender}-message`;
 
         if (sender === 'bot') {
-            // Text mit Markdown rendern
             message.innerHTML = marked.parse(text);
         } else {
-            // Nur als reiner Text (sicher)
             message.textContent = text;
         }
 
@@ -173,7 +171,7 @@ class Chatbot {
                 const json = JSON.parse(result);
                 output = json.chunk || json.message || json.error || result;
             } catch (e) {
-                // Kein valides JSON – ist okay.
+                // problem beim parsen des results
             }
 
             this.addMessage(output, 'bot');

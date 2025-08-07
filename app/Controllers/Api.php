@@ -93,7 +93,8 @@ class Api extends ResourceController
         try {
             $personModel = new PersonModel();
             $context['persons'] = [
-                'total_count' => $personModel->getTotalPersonenCount()
+                'total_count' => $personModel->getTotalPersonenCount(),
+                'fist_10' => $personModel->getPersonenChunk(10, 0)
             ];
         } catch (\Exception $e) {
             $context['persons'] = null;
@@ -102,13 +103,16 @@ class Api extends ResourceController
         try {
             $umsatzModel = new \App\Models\UmsatzModel();
             $currentMonth = $umsatzModel->getCurrentMonthComparison();
+            $last12Month = $umsatzModel->getLast12Months();
             $context['revenue'] = [
                 'current_month' => [
                     'current' => $currentMonth['current_revenue'],
                     'previous_year' => $currentMonth['previous_year_revenue'],
                     'month' => $currentMonth['month'],
                     'year' => $currentMonth['year']
-                ]
+                ],
+                'last_12_month'=> $last12Month,
+                'waehrung' => 'Alle Angaben sind in Euro'
             ];
         } catch (\Exception $e) {
             $context['revenue'] = null;
