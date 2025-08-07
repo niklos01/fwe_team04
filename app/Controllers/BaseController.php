@@ -55,4 +55,25 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = service('session');
     }
+
+
+    protected function renderLayout(array $viewsAndData): void
+    {
+        echo view('templates/header');
+        echo view('templates/navigation');
+
+        foreach ($viewsAndData as $entry) {
+            if (is_array($entry)) {
+                echo view($entry[0], $entry[1]);
+            } else {
+                echo view($entry);
+            }
+        }
+
+        echo view('templates/footer');
+    }
+
+
+
+
 }
