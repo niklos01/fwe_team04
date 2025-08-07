@@ -1,8 +1,8 @@
 <div class="container my-4">
     <div class="card">
-        <div class="card-header text-start">
-            <h2 class="card-title">Dashboard</h2>
-        </div>
+        <h3 class="card-header text-start">
+           Dashboard
+        </h3>
         <div class="card-body">
             <div class="row g-4 align-items-stretch mb-4">
                 <div class="col-lg-8 d-flex">
