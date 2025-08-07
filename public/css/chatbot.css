@@ -90,14 +90,20 @@
 }
 
 .chat-input button {
-    padding: 8px 15px;
+    width: 40px;
+    height: 40px;
     background: #F530FF;
     color: white;
     border: none;
-    border-radius: 20px;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: background 0.2s ease;
+    padding: 0;
 }
+
 
 .chat-input button:hover {
     background: #d000d8;

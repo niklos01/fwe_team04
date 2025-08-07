@@ -1,26 +1,38 @@
 class Chatbot {
     constructor() {
-        this.isOpen = false;
-        this.hasWelcomeMessage = false;
-        this.hasGreeted = false;
+        this.state = {
+            isOpen: false,
+            hasWelcomeMessage: false,
+            hasGreeted: false,
+        };
 
-        this.welcomeMessage = `
-            Hey, ich bin Cleo! Ich bin hier, um dir zu helfen.
-        `;
+        this.text = {
+            welcome: 'Hey, ich bin Cleo! Ich bin hier, um dir zu helfen.',
+            greet: 'Soll ich deine Umsätze analysieren?',
+            assistantName: 'Cleo, dein Chat Assistant',
+            placeholder: 'Schreib deine Nachricht…',
+            sendButton: 'Senden',
+            error: 'Entschuldigung, bei der Verarbeitung deiner Anfrage ist ein Fehler aufgetreten.',
+        };
 
         this.init();
     }
 
     init() {
-        const container = document.createElement('div');
-        container.className = 'chat-container';
+        this.createDOM();
+        this.bindEvents();
+    }
 
-        const button = document.createElement('button');
-        button.className = 'chat-button';
+    createDOM() {
+        this.container = document.createElement('div');
+        this.container.className = 'chat-container';
+
+        // Button mit Icon
+        this.button = document.createElement('button');
+        this.button.className = 'chat-button';
 
         const svgWrapper = document.createElement('div');
         svgWrapper.className = 'chat-icon';
-
         svgWrapper.innerHTML = `
             <svg width="100%" height="auto" preserveAspectRatio="xMidYMid meet" viewBox="0 0 986 856" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Group 5">
@@ -47,74 +59,72 @@ class Chatbot {
             </defs>
             </svg>
         `;
+        this.button.appendChild(svgWrapper);
 
-        button.appendChild(svgWrapper);
-        button.onclick = () => this.toggleChat();
-
-        const chatWindow = document.createElement('div');
-        chatWindow.className = 'chat-window';
+        // Chatfenster
+        this.chatWindow = document.createElement('div');
+        this.chatWindow.className = 'chat-window';
 
         const header = document.createElement('div');
         header.className = 'chat-header';
-        header.textContent = 'Cleo, dein Chat Assistant';
+        header.textContent = this.text.assistantName;
 
-        const messages = document.createElement('div');
-        messages.className = 'chat-messages';
+        this.messagesContainer = document.createElement('div');
+        this.messagesContainer.className = 'chat-messages';
 
+        // Eingabefeld
         const inputArea = document.createElement('div');
         inputArea.className = 'chat-input';
 
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.placeholder = 'Schreib deine Nachricht…';
-        input.onkeypress = (e) => {
+        this.input = document.createElement('input');
+        this.input.type = 'text';
+        this.input.placeholder = this.text.placeholder;
+
+        this.sendButton = document.createElement('button');
+        this.sendButton.innerHTML = `<i class="bi bi-send-fill"></i>`;
+
+        inputArea.appendChild(this.input);
+        inputArea.appendChild(this.sendButton);
+
+        this.chatWindow.appendChild(header);
+        this.chatWindow.appendChild(this.messagesContainer);
+        this.chatWindow.appendChild(inputArea);
+
+        this.container.appendChild(this.button);
+        this.container.appendChild(this.chatWindow);
+
+        document.body.appendChild(this.container);
+    }
+
+    bindEvents() {
+        this.button.addEventListener('click', () => this.toggleChat());
+
+        this.input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.sendMessage();
             }
-        };
+        });
 
-        const sendButton = document.createElement('button');
-        sendButton.textContent = 'Senden';
-        sendButton.onclick = () => this.sendMessage();
-
-        inputArea.appendChild(input);
-        inputArea.appendChild(sendButton);
-
-        chatWindow.appendChild(header);
-        chatWindow.appendChild(messages);
-        chatWindow.appendChild(inputArea);
-
-        container.appendChild(button);
-        container.appendChild(chatWindow);
-
-        document.body.appendChild(container);
-
-        this.chatWindow = chatWindow;
-        this.messagesContainer = messages;
-        this.input = input;
+        this.sendButton.addEventListener('click', () => this.sendMessage());
     }
 
     toggleChat() {
-        const container = document.querySelector('.chat-container');
-        if (!this.isOpen) {
-            container.classList.add('open');
-            this.chatWindow.classList.add('active');
+        const { isOpen, hasWelcomeMessage, hasGreeted } = this.state;
 
-            if (!this.hasWelcomeMessage) {
-                this.addMessage(this.welcomeMessage, 'bot');
-                this.hasWelcomeMessage = true;
-            }
+        this.container.classList.toggle('open', !isOpen);
+        this.chatWindow.classList.toggle('active', !isOpen);
 
-            if (!this.hasGreeted) {
-                this.addMessage('Soll ich deine Umsätze analysieren?', 'bot');
-                this.hasGreeted = true;
-            }
-        } else {
-            container.classList.remove('open');
-            this.chatWindow.classList.remove('active');
+        if (!isOpen && !hasWelcomeMessage) {
+            this.addMessage(this.text.welcome, 'bot');
+            this.state.hasWelcomeMessage = true;
         }
 
-        this.isOpen = !this.isOpen;
+        if (!isOpen && !hasGreeted) {
+            this.addMessage(this.text.greet, 'bot');
+            this.state.hasGreeted = true;
+        }
+
+        this.state.isOpen = !isOpen;
     }
 
     addMessage(text, sender) {
@@ -135,7 +145,7 @@ class Chatbot {
         this.input.value = '';
 
         try {
-            const response = await fetch(baseUrl + '/api/chat', {
+            const response = await fetch(`${baseUrl}/api/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -154,14 +164,14 @@ class Chatbot {
                 const json = JSON.parse(result);
                 output = json.chunk || json.message || json.error || result;
             } catch (e) {
-                // kein gültiges JSON
+                // Kein valides JSON – ist okay.
             }
 
             this.addMessage(output, 'bot');
 
         } catch (error) {
             console.error('Error:', error);
-            this.addMessage('Entschuldigung, bei der Verarbeitung deiner Anfrage ist ein Fehler aufgetreten.', 'bot');
+            this.addMessage(this.text.error, 'bot');
         }
     }
 }
