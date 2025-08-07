@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers;
 
 use App\Models\PersonModel;
@@ -16,9 +15,9 @@ class Home extends BaseController
         ]);
     }
 
-
     // Personen
-    public function indexPersonen(){
+    public function indexPersonen()
+    {
         $this->renderLayout([
             "personen/tableAjax",
         ]);
@@ -26,22 +25,21 @@ class Home extends BaseController
 
     public function getPersonenAjax()
     {
-        $model = new PersonModel();
+        $model    = new PersonModel();
         $personen = $model->getPersonen();
 
         return json_encode($personen);
     }
-
 
     /**
      * @throws MpdfException
      */
     public function pdf(int $id): \CodeIgniter\HTTP\ResponseInterface
     {
-        $model = new PersonModel();
+        $model  = new PersonModel();
         $person = $model->getPersonen($id);
 
-        if (!$person) {
+        if (! $person) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException("Person mit ID {$id} nicht gefunden.");
         }
 
@@ -56,23 +54,20 @@ class Home extends BaseController
             ->setBody($mpdf->Output("person_{$id}.pdf", 'S')); // Stream to browser
     }
 
-
-
     // Umsatz
     public function last12Months()
     {
-        $this->umsatzModel = new UmsatzModel();
-        $data = $this->umsatzModel->getLast12Months();
+        $model = new UmsatzModel();
+        $data  = $model->getLast12Months();
         return $this->response->setJSON($data);
     }
 
     public function currentMonthComparison()
     {
-        $this->umsatzModel = new UmsatzModel();
-        $data = $this->umsatzModel->getCurrentMonthComparison();
+        $model = new UmsatzModel();
+        $data  = $model->getCurrentMonthComparison();
         return $this->response->setJSON($data);
     }
-
 
     // PDF
     public function generatePdfAll()
