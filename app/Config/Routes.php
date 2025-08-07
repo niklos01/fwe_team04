@@ -18,15 +18,8 @@ $routes->get('umsatz/current-month-comparison', 'Home::currentMonthComparison');
 $routes->get('home/getPersonenAjax', 'Home::getPersonenAjax');
 $routes->get('home/generatePdfAll', 'Home::generatePdfAll');
 
-                                                     // $routes->resource("api");
-$routes->get("api/", "Api::index");                  // Different path
-$routes->get("api/reqWithAuth", "Api::reqWithAuth"); // Different path
-
-$routes->get("api2/", "Api2::index");                  // Different path
-$routes->get("api2/reqWithAuth", "Api2::reqWithAuth"); // Different path
-<<<<<<< Updated upstream
-$routes->get("api2/crud", "Api2::crud"); // Different path
-
-=======
-$routes->get("api2/crud", "Api2::crud");               // Different path
->>>>>>> Stashed changes
+$routes->get("api/", "Api::index");
+$routes->get("api/reqWithAuth", "Api::reqWithAuth");
+$routes->get("api2/", "Api2::index");
+$routes->get("api2/reqWithAuth", "Api2::reqWithAuth");
+$routes->post("api2/crud", "Api2::crud");

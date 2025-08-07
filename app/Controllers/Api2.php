@@ -42,7 +42,8 @@ class Api2 extends ResourceController
         return $this->respond($personen);
 
     }
-    public function crud(){
+    public function crud()
+    {
         // Get the Authorization header
         $authHeader = $this->request->getHeaderLine('Authorization');
 
@@ -63,12 +64,12 @@ class Api2 extends ResourceController
         // Alles ok , dann return data
         $model = new PersonModel();
 
-        $input = $this->request->getJSON(true); // true = als Array
-        $todo  = $input['todo'] ?? null;
-        $data  = $input['data'] ?? [];
+        // Get input data from form-data or json
+        $input    = $_POST ?? $this->request->getJSON(true);
+        $todo     = $input['todo'] ?? null;
+        $data     = $input['data'] ?? [];
         $personen = $model->crud($todo, $data);
         return $this->respond($personen);
-
 
     }
 

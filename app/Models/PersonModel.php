@@ -7,7 +7,6 @@ class PersonModel extends Model
 {
     protected $table = 'personen';
 
-
     public function getPersonen($person_id = null): ?array
     {
         $builder = $this->db->table('personen');
@@ -37,11 +36,6 @@ class PersonModel extends Model
     public function crud(string $todo, array $data = [])
     {
         switch ($todo) {
-            case 'create':
-                if ($this->insert($data)) {
-                    return ['status' => 'success', 'message' => 'Person erstellt', 'data' => $data];
-                }
-                return ['status' => 'error', 'errors' => $this->errors()];
 
             case 'read':
                 if (isset($data['id'])) {
@@ -50,8 +44,23 @@ class PersonModel extends Model
                 }
                 return $this->findAll();
 
+            case 'create':
+                $required_fields = ['vorname', 'nachname', 'plz', 'ort', 'username'];
+
+                foreach ($required_fields as $field) {
+                    if (! isset($data[$field]) || empty($data[$field])) {
+                        return ['status' => 'error', 'message' => "$field ist erforderlich"];
+                    }
+                }
+
+                if ($this->insert($data)) {
+                    return ['status' => 'success', 'message' => 'Person erstellt', 'data' => $data];
+                }
+
+                return ['status' => 'error', 'errors' => $this->errors()];
+
             case 'update':
-                if (!isset($data['id'])) {
+                if (! isset($data['id'])) {
                     return ['status' => 'error', 'message' => 'ID fehlt'];
                 }
                 $id = $data['id'];
@@ -62,7 +71,7 @@ class PersonModel extends Model
                 return ['status' => 'error', 'errors' => $this->errors()];
 
             case 'delete':
-                if (!isset($data['id'])) {
+                if (! isset($data['id'])) {
                     return ['status' => 'error', 'message' => 'ID fehlt'];
                 }
                 if ($this->delete($data['id'])) {
