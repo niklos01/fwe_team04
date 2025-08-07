@@ -9,16 +9,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link<?= uri_string() === '' ? ' active' : '' ?>" href="<?= base_url('/') ?>">Start</a>
+                    <a class="nav-link<?= uri_string() === '' ? ' active' : '' ?>" href="<?= base_url('/') ?>">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link<?= uri_string() === 'personen' ? ' active' : '' ?>" href="<?= base_url('personen') ?>">Personenliste</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link<?= uri_string() === 'personen/neu' ? ' active' : '' ?>" href="<?= base_url('personen/neu') ?>">Neue Person</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link<?= uri_string() === 'hilfe' ? ' active' : '' ?>" href="<?= base_url('hilfe') ?>">Hilfe</a>
+                    <a class="nav-link<?= uri_string() === 'personen' ? ' active' : '' ?>" href="<?= base_url('personen') ?>">Personen</a>
                 </li>
             </ul>
         </div>

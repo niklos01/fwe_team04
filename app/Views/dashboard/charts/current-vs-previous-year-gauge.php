@@ -1,7 +1,7 @@
-<div class="card">
+<div class="card h-100 w-100">
     <div class="card-header">Monatsumsatz im Vergleich zum Vorjahr</div>
     <div class="card-body">
-        <canvas id="gaugeChart" style="max-height: 300px;"></canvas>
+        <canvas id="gaugeChart"></canvas>
         <div id="chartSummary"></div>
     </div>
 </div>
