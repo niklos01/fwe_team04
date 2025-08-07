@@ -19,6 +19,5 @@ $routes->get('home/getPersonenAjax', 'Home::getPersonenAjax');
 $routes->get('home/generatePdfAll', 'Home::generatePdfAll');
 
 // $routes->resource("api");
-$routes->get("api/", "Api::index"); // Different path
-
+$routes->get("api/", "Api::index");                  // Different path
 $routes->get("api/reqWithAuth", "Api::reqWithAuth"); // Different path

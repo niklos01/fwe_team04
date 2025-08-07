@@ -30,7 +30,7 @@ class Api extends ResourceController
         $token = trim(substr($authHeader, 7));
 
         // Validate the token (replace this with your actual token validation logic)
-        if ($token !== "team_04") {
+        if ($token !== "Team#04") {
             return $this->response->setStatusCode(403)->setJSON(["error" => 'Ungültiger Bearer-Token.']);
 
         }
