@@ -19,3 +19,7 @@ $routes->get('umsatz/current-month-comparison', 'Home::currentMonthComparison');
 
 $routes->get('home/getPersonenAjax', 'Home::getPersonenAjax');
 $routes->get('home/generatePdfAll', 'Home::generatePdfAll');
+
+
+$routes->resource("api");
+$routes->get("api/sec", "Api::sec");
