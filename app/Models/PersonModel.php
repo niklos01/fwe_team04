@@ -5,6 +5,9 @@ use CodeIgniter\Model;
 
 class PersonModel extends Model
 {
+    protected $table = 'personen';
+
+
     public function getPersonen($person_id = null): ?array
     {
         $builder = $this->db->table('personen');
@@ -31,4 +34,44 @@ class PersonModel extends Model
         return $this->db->table('personen')->countAllResults();
     }
 
+    public function crud(string $todo, array $data = [])
+    {
+        switch ($todo) {
+            case 'create':
+                if ($this->insert($data)) {
+                    return ['status' => 'success', 'message' => 'Person erstellt', 'data' => $data];
+                }
+                return ['status' => 'error', 'errors' => $this->errors()];
+
+            case 'read':
+                if (isset($data['id'])) {
+                    $person = $this->find($data['id']);
+                    return $person ?: ['status' => 'error', 'message' => 'Nicht gefunden'];
+                }
+                return $this->findAll();
+
+            case 'update':
+                if (!isset($data['id'])) {
+                    return ['status' => 'error', 'message' => 'ID fehlt'];
+                }
+                $id = $data['id'];
+                unset($data['id']);
+                if ($this->update($id, $data)) {
+                    return ['status' => 'success', 'message' => 'Person aktualisiert', 'id' => $id];
+                }
+                return ['status' => 'error', 'errors' => $this->errors()];
+
+            case 'delete':
+                if (!isset($data['id'])) {
+                    return ['status' => 'error', 'message' => 'ID fehlt'];
+                }
+                if ($this->delete($data['id'])) {
+                    return ['status' => 'success', 'message' => 'Person gelöscht'];
+                }
+                return ['status' => 'error', 'message' => 'Löschen fehlgeschlagen'];
+
+            default:
+                return ['status' => 'error', 'message' => 'Ungültige Aktion'];
+        }
+    }
 }

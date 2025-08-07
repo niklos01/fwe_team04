@@ -21,3 +21,8 @@ $routes->get('home/generatePdfAll', 'Home::generatePdfAll');
 // $routes->resource("api");
 $routes->get("api/", "Api::index");                  // Different path
 $routes->get("api/reqWithAuth", "Api::reqWithAuth"); // Different path
+
+$routes->get("api2/", "Api2::index");                  // Different path
+$routes->get("api2/reqWithAuth", "Api2::reqWithAuth"); // Different path
+$routes->get("api2/crud", "Api2::crud"); // Different path
+
