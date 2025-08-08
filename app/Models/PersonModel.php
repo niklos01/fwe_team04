@@ -6,6 +6,14 @@ use CodeIgniter\Model;
 class PersonModel extends Model
 {
     protected $table = 'personen';
+    protected $allowedFields = [
+        'vorname',
+        'name',
+        'strasse',
+        'plz',
+        'ort',
+        'username'
+    ];
 
     public function getPersonen($person_id = null): ?array
     {
@@ -45,13 +53,14 @@ class PersonModel extends Model
                 return $this->findAll();
 
             case 'create':
-                $required_fields = ['vorname', 'nachname', 'plz', 'ort', 'username'];
+                $required_fields = ['username'];
 
                 foreach ($required_fields as $field) {
                     if (! isset($data[$field]) || empty($data[$field])) {
                         return ['status' => 'error', 'message' => "$field ist erforderlich"];
                     }
                 }
+
 
                 if ($this->insert($data)) {
                     return ['status' => 'success', 'message' => 'Person erstellt', 'data' => $data];

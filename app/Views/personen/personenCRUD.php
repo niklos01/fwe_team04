@@ -1,14 +1,18 @@
+<?php
+$csrfName = csrf_token();
+$csrfHash = csrf_hash();
+?>
 <div class="container my-4">
     <div class="card">
         <h3 class="card-header">Personenliste</h3>
-        <div class="card-body">
-
-
-
+        <div class="ca            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer Team#04'
+            },ody">
             <div class="container mt-2">
                 <div class="table-responsive">
                     <div id="toolbar" class="d-flex justify-content-end gap-2 mb-2">
-                        <a href="<?php echo base_url("home/generatePdfAll") ?>" class="btn btn-sm btn-outline-danger"
+                        <a href="<?php echo base_url("home/generatePdfAll") ?>" class="btn btn-sm btn-outline-dark"
                             title="Gesamte Personen als PDF downloaden">
                             <i class="bi bi-file-earmark-pdf"></i> Alle Downloaden
                         </a>
@@ -80,7 +84,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -92,7 +95,7 @@ function actionButtonFormatter(value, row, index) {
 
     return `
         <div class="btn-group" role="group">
-            <a href="${pdfUrl}" class="btn btn-sm btn-outline-danger" target="_blank" title="Person als PDF anzeigen">
+            <a href="${pdfUrl}" class="btn btn-sm btn-outline-dark" target="_blank" title="Person als PDF anzeigen">
                 <i class="bi bi-file-earmark-pdf"></i>
             </a>
             <button class="btn btn-sm btn-outline-primary" onclick="editPerson(${id})" title="Person bearbeiten">
@@ -120,9 +123,9 @@ function clearForm() {
 
 function editPerson(id) {
     currentOperation = 'update';
-    fetch(`<?= base_url('api/personen') ?>/${id}`, {
+    fetch(`<?= base_url('personenapi') ?>/${id}`, {
         headers: {
-            'X-CSRF-TOKEN': '<?= csrf_hash() ?>'
+            'Authorization': 'Bearer Team#04'
         }
     })
     .then(response => response.json())
@@ -140,10 +143,10 @@ function editPerson(id) {
 
 function deletePerson(id) {
     if (confirm('Möchten Sie diese Person wirklich löschen?')) {
-        fetch(`<?= base_url('api/personen') ?>/${id}`, {
+        fetch(`<?= base_url('personenapi') ?>/${id}`, {
             method: 'DELETE',
             headers: {
-                'X-CSRF-TOKEN': '<?= csrf_hash() ?>'
+                'Authorization': 'Bearer Team#04'
             }
         })
         .then(response => response.json())
@@ -188,11 +191,11 @@ document.getElementById('saveButton').addEventListener('click', function() {
         formData.id = document.getElementById('personId').value;
     }
 
-    fetch('<?= base_url('api/personen') ?>', {
+    fetch('<?= base_url('personenapi') ?>' + (currentOperation === 'update' ? '/' + formData.id : ''), {
         method: currentOperation === 'create' ? 'POST' : 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '<?= csrf_hash() ?>'
+            'Authorization': 'Bearer Team#04'
         },
         body: JSON.stringify(formData)
     })

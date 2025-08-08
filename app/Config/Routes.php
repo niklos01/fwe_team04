@@ -24,3 +24,10 @@ $routes->get("api/weather", "Api::weather");
 $routes->get("api2/ai", "Api2::ai_response");
 
 $routes->post("api/chat", "Api::chat");
+
+// CRUD Routes für Personen
+$routes->get('personenapi/(:num)', 'PersonenApi::index/$1');
+$routes->get('personenapi', 'PersonenApi::index');
+$routes->post('personenapi', 'PersonenApi::index');
+$routes->put('personenapi/(:num)', 'PersonenApi::index/$1');
+$routes->delete('personenapi/(:num)', 'PersonenApi::index/$1');
