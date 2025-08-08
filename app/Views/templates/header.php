@@ -12,8 +12,13 @@
 
     <!-- Eigene CSS -->
     <link rel="stylesheet" href="<?= base_url('css/index.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/chatbot.css') ?>">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.2/dist/bootstrap-table.min.js"></script>
+
+    <!-- Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>

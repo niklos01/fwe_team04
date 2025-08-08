@@ -19,7 +19,7 @@ class Home extends BaseController
     public function indexPersonen()
     {
         $this->renderLayout([
-            "personen/tableAjax",
+            "personen/personenCRUD",
         ]);
     }
 

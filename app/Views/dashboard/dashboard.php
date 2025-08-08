@@ -13,11 +13,16 @@
                 </div>
             </div>
 
-            <div class="row g-4 align-items-stretch">
+            <div class="row g-4 align-items-stretch mb-4">
                 <div class="col">
+                    <?= $this->include('dashboard/weather/weather.php') ?>
+                </div>
+
+                <div class="col-lg-8">
                     <?= $this->include('dashboard/maps/leaflet-map.php') ?>
                 </div>
             </div>
+
 
         </div>
     </div>

@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cb694534494725f99c3553c939110d5",
+    "content-hash": "d76771c97589e51580e2f94ee780acf3",
     "packages": [
+        {
+            "name": "ai-access/ai-access",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aiaccess/ai-access.git",
+                "reference": "90a31fedcf737ab5b67bfe1e4d43cf4487a28fbb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aiaccess/ai-access/zipball/90a31fedcf737ab5b67bfe1e4d43cf4487a28fbb",
+                "reference": "90a31fedcf737ab5b67bfe1e4d43cf4487a28fbb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "dg/bypass-finals": "^1.9",
+                "mockery/mockery": "^1.6",
+                "nette/tester": "^2.5",
+                "phpstan/phpstan-nette": "^2",
+                "tracy/tracy": "^2.10"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                }
+            ],
+            "description": "A flexible PHP library providing access to various AI models (Gemini, OpenAI, Anthropic, DeepSeek, Grok) via a consistent interface.",
+            "keywords": [
+                "composer"
+            ],
+            "support": {
+                "issues": "https://github.com/aiaccess/ai-access/issues",
+                "source": "https://github.com/aiaccess/ai-access/tree/v0.1.0"
+            },
+            "time": "2025-04-22T08:51:49+00:00"
+        },
         {
             "name": "codeigniter4/framework",
             "version": "v4.6.3",
