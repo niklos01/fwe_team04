@@ -4,6 +4,10 @@
            Dashboard
         </h3>
         <div class="card-body">
+            <div class="row mx-1 mb-4">
+                    <a href="https://github.com/niklos01/fwe_04_react.git" class="btn btn-primary" role="button" target="_blank">Zum Github Repo</a>
+            </div>
+
             <div class="row g-4 align-items-stretch mb-4">
                 <div class="col-lg-8 d-flex">
                     <?= $this->include('dashboard/charts/last-12-months-bar-chart') ?>
