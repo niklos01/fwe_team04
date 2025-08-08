@@ -8,7 +8,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    fetch('<?= base_url('umsatz/current-month-comparison') ?>')
+    fetch('<?= base_url('home/current-month-comparison') ?>')
         .then(response => response.json())
         .then(data => {
             const current = Number(data.current_revenue);

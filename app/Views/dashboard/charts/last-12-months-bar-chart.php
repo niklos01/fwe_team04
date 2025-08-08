@@ -7,7 +7,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    fetch('<?= base_url('umsatz/last12-months') ?>')
+    fetch('<?= base_url('home/last12-months') ?>')
         .then(response => response.json())
         .then(data => {
             const labels = data.map(d => `${String(d.monat).padStart(2, '0')}.${d.jahr}`);

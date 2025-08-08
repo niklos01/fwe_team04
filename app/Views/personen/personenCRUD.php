@@ -20,7 +20,7 @@ $csrfHash = csrf_hash();
 
                     <table id="personenTabelle" class="table table-bordered table-hover table-striped align-middle"
                         data-toggle="table" data-toolbar="#toolbar"
-                        data-url="<?php echo base_url('personen/getPersonenAjax') ?>" data-search="true"
+                        data-url="<?php echo base_url('home/getPersonenAjax') ?>" data-search="true"
                         data-pagination="true" data-show-refresh="true" data-show-columns="true"
                         data-side-pagination="client">
                         <thead class="table-dark">
@@ -91,7 +91,7 @@ $csrfHash = csrf_hash();
 <script>
 function actionButtonFormatter(value, row, index) {
     const id = row.id;
-    const pdfUrl = "<?php echo base_url('personen/pdf') ?>/" + id;
+    const pdfUrl = "<?php echo base_url('home/pdf') ?>/" + id;
 
     return `
         <div class="btn-group" role="group">
