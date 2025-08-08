@@ -30,6 +30,7 @@ class PersonenApi extends BaseController
             return $this->response->setStatusCode(403)->setJSON(["error" => 'Ungültiger Bearer-Token.']);
         }
 
+        $this->model = new PersonModel();
         $method = $this->request->getMethod();
         $data = $this->request->getJSON(true);
 

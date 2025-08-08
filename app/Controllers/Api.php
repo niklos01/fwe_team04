@@ -16,7 +16,7 @@ class Api extends ResourceController
         return $this->respond($personen);
     }
 
-    public function crud()
+    public function crud($id = null)
     {
         $authHeader = $this->request->getHeaderLine('Authorization');
 
@@ -30,13 +30,30 @@ class Api extends ResourceController
             return $this->response->setStatusCode(403)->setJSON(["error" => 'Ungültiger Bearer-Token.']);
         }
 
-        $model = new PersonModel();
-        $input = $_POST ?: $this->request->getJSON(true);
-        $todo = $input['todo'] ?? null;
-        $data = $input['data'] ?? [];
+        $this->model = new PersonModel();
+        $method = $this->request->getMethod();
+        $data = $this->request->getJSON(true);
 
-        $personen = $model->crud($todo, $data);
-        return $this->respond($personen);
+        switch ($method) {
+            case 'GET':
+                return $this->response->setJSON($this->model->crud('read', ['id' => $id]));
+
+            case 'POST':
+                return $this->response->setJSON($this->model->crud('create', $data));
+
+            case 'PUT':
+                if ($id) {
+                    $data['id'] = $id;
+                }
+                return $this->response->setJSON($this->model->crud('update', $data));
+
+            case 'DELETE':
+                return $this->response->setJSON($this->model->crud('delete', ['id' => $id]));
+
+            default:
+                return $this->fail("Methode " . $method . " nicht erlaubt", 405);
+
+        }
     }
 
     public function weather()

@@ -123,7 +123,7 @@ function clearForm() {
 
 function editPerson(id) {
     currentOperation = 'update';
-    fetch(`<?= base_url('personenapi') ?>/${id}`, {
+    fetch(`<?= base_url('api/crud') ?>/${id}`, {
         headers: {
             'Authorization': 'Bearer Team#04'
         }
@@ -143,7 +143,7 @@ function editPerson(id) {
 
 function deletePerson(id) {
     if (confirm('Möchten Sie diese Person wirklich löschen?')) {
-        fetch(`<?= base_url('personenapi') ?>/${id}`, {
+        fetch(`<?= base_url('api/crud') ?>/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': 'Bearer Team#04'
@@ -191,7 +191,7 @@ document.getElementById('saveButton').addEventListener('click', function() {
         formData.id = document.getElementById('personId').value;
     }
 
-    fetch('<?= base_url('personenapi') ?>' + (currentOperation === 'update' ? '/' + formData.id : ''), {
+    fetch('<?= base_url('api/crud') ?>' + (currentOperation === 'update' ? '/' + formData.id : ''), {
         method: currentOperation === 'create' ? 'POST' : 'PUT',
         headers: {
             'Content-Type': 'application/json',

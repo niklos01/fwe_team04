@@ -19,15 +19,14 @@ $routes->get('home/getPersonenAjax', 'Home::getPersonenAjax');
 $routes->get('home/generatePdfAll', 'Home::generatePdfAll');
 
 $routes->get("api/", "Api::index");
-$routes->post("api/crud", "Api::crud");
 $routes->get("api/weather", "Api::weather");
 $routes->get("api2/ai", "Api2::ai_response");
 
 $routes->post("api/chat", "Api::chat");
 
 // CRUD Routes für Personen
-$routes->get('personenapi/(:num)', 'PersonenApi::index/$1');
-$routes->get('personenapi', 'PersonenApi::index');
-$routes->post('personenapi', 'PersonenApi::index');
-$routes->put('personenapi/(:num)', 'PersonenApi::index/$1');
-$routes->delete('personenapi/(:num)', 'PersonenApi::index/$1');
+$routes->get('api/crud/(:num)', 'Api::crud/$1');
+$routes->get('api/crud', 'Api::crud');
+$routes->post('api/crud', 'Api::crud');
+$routes->put('api/crud/(:num)', 'Api::crud/$1');
+$routes->delete('api/crud/(:num)', 'Api::crud/$1');
